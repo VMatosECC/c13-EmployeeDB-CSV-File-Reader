@@ -102,11 +102,11 @@ public:
     }
 
     string extractString(string& line) {
+        int    startquote = 0;
+        int    endquote = 0;
+        char   quote = '\'';
         string token = "";
         string result = "";
-        int startquote = 0;
-        int endquote = 0;
-
 
         int skip = 0;
         //Look for next comma separator
@@ -114,12 +114,12 @@ public:
             //tentative token 
             token = line.substr(0, line.find(","));
             //Is token a fully quoted string?
-            startquote = token.find("'");
-            endquote = token.find("'", startquote + 1);
+            startquote = token.find(quote);
+            endquote = token.find(quote, startquote + 1);
             if (startquote != string::npos and endquote == string::npos) {
                 // this token is an incomplete string - we have just the opening quote
                 // look the line for its matching closing quote
-                endquote = line.find("'", startquote + 1);
+                endquote = line.find(quote, startquote + 1);
             }
 
             //Is this token a quoted string?
